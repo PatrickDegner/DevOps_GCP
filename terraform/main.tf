@@ -4,8 +4,6 @@ locals {
     "iamcredentials.googleapis.com",       # IAM Service Account Credentials API
     "cloudresourcemanager.googleapis.com", # Cloud Resource Manager API
     "sts.googleapis.com",                  # Security Token Service API
-
-    # You can add more apis to enable in the project
   ])
 }
 
