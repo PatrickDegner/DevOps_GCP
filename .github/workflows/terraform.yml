@@ -9,6 +9,9 @@ on:
     paths:
       - 'terraform/**'
 
+permissions:
+  contents: write
+
 env:
   TERRAFORM_VERSION: 1.10.4
   WORKING_DIR: terraform/
