@@ -4,4 +4,3 @@ resource "google_artifact_registry_repository" "devops-repo" {
   description   = "DevOps repository"
   format        = "DOCKER"
 }
-
