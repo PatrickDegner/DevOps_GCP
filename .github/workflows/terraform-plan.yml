@@ -49,3 +49,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
+
+      - name: Set output
+        id: set-output
+        run: echo "::set-output name=plan-success::true"
