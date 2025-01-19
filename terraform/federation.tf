@@ -12,7 +12,6 @@ resource "google_service_account" "github_actions" {
   description  = "link to Workload Identity Pool used by GitHub Actions"
 }
 
-# Allow to access all resources
 resource "google_project_iam_member" "roles" {
   project = var.project
   for_each = {
