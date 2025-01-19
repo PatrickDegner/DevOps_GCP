@@ -12,3 +12,4 @@ resource "google_project_service" "service" {
   project  = var.project
   service  = each.value
 }
+
