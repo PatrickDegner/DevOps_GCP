@@ -1,18 +1,13 @@
-name: terraform
+name: terraform-apply
 on:
-  push:
-    paths:
-      - 'terraform/**'
-  pull_request:
-    paths:
-      - 'terraform/**'
-
-env:
-  TERRAFORM_VERSION: 1.10.4
-  WORKING_DIR: terraform/
+  workflow_run:
+    workflows: ["terraform"]
+    types:
+      - completed
 
 jobs:
-  terraform:
+  terraform-apply:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
     permissions:
       contents: write
       id-token: write
@@ -34,29 +29,11 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
-
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true
         id: apply
         run: terraform apply -auto-approve
 
       - name: Generate Terraform docs
-        if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true
         uses: terraform-docs/gh-actions@v1.3.0
         with:
           working-dir: ${{ env.WORKING_DIR }}
