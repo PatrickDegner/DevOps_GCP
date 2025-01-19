@@ -8,13 +8,12 @@ on:
       - 'terraform/**'
 
 env:
-  TERRAFORM_VERSION: 1.10.4
   WORKING_DIR: terraform/
 
 jobs:
   terraform:
     permissions:
-      contents: write
+      contents: read
       id-token: write
       pull-requests: write
     runs-on: ubuntu-latest
@@ -49,7 +48,3 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-
-      - name: Set output
-        id: set-output
-        run: echo "::set-output name=plan-success::true"
