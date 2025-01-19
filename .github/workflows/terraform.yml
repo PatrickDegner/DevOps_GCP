@@ -1,8 +1,6 @@
 name: terraform
 on:
   push:
-    branches:
-      - main
     paths:
       - 'terraform/**'
   pull_request:
@@ -27,6 +25,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate Terraform docs
+        if: github.ref == 'refs/heads/main'
         uses: terraform-docs/gh-actions@v1.3.0
         with:
           working-dir: ${{ env.WORKING_DIR }}
