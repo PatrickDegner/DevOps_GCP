@@ -51,13 +51,13 @@ jobs:
         run: terraform plan -no-color
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == push && github.event.pull_request.merged == true
+        if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true
         id: apply
         run: terraform apply -auto-approve
 
       - name: Generate Terraform docs
-        if: github.ref == 'refs/heads/main' && github.event_name == push && github.event.pull_request.merged == true
-        uses: terraform-docs/gh-actions@v1.3.0
+        if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true
+        uses: terraform-docs/gh-actions@v1.3.0m
         with:
           working-dir: ${{ env.WORKING_DIR }}
           output-file: README.md
