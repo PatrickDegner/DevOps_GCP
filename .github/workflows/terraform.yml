@@ -9,9 +9,6 @@ on:
     paths:
       - 'terraform/**'
 
-permissions:
-  contents: write
-
 env:
   TERRAFORM_VERSION: 1.10.4
   WORKING_DIR: terraform/
@@ -19,7 +16,7 @@ env:
 jobs:
   terraform:
     permissions:
-      contents: read
+      contents: write
       id-token: write
       pull-requests: write
     runs-on: ubuntu-latest
