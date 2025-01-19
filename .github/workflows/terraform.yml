@@ -5,10 +5,13 @@ on:
       - main
     paths:
       - 'terraform/**'
+  pull_request:
+    paths:
+      - 'terraform/**'
 
 env:
   TERRAFORM_VERSION: 1.10.4
-  WORKING_DIR: terraform/ 
+  WORKING_DIR: terraform/
 
 jobs:
   terraform:
@@ -50,5 +53,6 @@ jobs:
         run: terraform plan -no-color
 
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' # Only apply on push to main
         id: apply
         run: terraform apply -auto-approve
