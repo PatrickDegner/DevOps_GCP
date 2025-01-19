@@ -36,6 +36,14 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
 
+      - name: Generate Terraform docs
+        uses: terraform-docs/gh-actions@v1.3.0
+        with:
+          working-dir: ${{ env.WORKING_DIR }}
+          output-file: README.md
+          output-method: inject
+          git-push: "true"
+
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
