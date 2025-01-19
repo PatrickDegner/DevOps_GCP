@@ -13,6 +13,5 @@ terraform apply
 
 
 
-1. gcloud init
 2. gcloud container clusters create devops-gcp --zone us-west1-a --disk-type pd-standard --disk-size 15 --num-nodes 1 --machine-type e2-small
 3. 

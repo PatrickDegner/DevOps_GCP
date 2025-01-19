@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'terraform/**'
 
 env:
   TERRAFORM_VERSION: 1.10.4
