@@ -24,15 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate Terraform docs
-        if: github.ref == 'refs/heads/main'
-        uses: terraform-docs/gh-actions@v1.3.0
-        with:
-          working-dir: ${{ env.WORKING_DIR }}
-          output-file: README.md
-          output-method: inject
-          git-push: "true"
-
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: google-github-actions/auth@v2
@@ -60,6 +51,15 @@ jobs:
         run: terraform plan -no-color
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' # Only apply on push to main
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.event.pull_request.merged == true
         id: apply
         run: terraform apply -auto-approve
+
+      - name: Generate Terraform docs
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.event.pull_request.merged == true
+        uses: terraform-docs/gh-actions@v1.3.0
+        with:
+          working-dir: ${{ env.WORKING_DIR }}
+          output-file: README.md
+          output-method: inject
+          git-push: "true"
