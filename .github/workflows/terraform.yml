@@ -57,7 +57,7 @@ jobs:
 
       - name: Generate Terraform docs
         if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true
-        uses: terraform-docs/gh-actions@v1.3.0m
+        uses: terraform-docs/gh-actions@v1.3.0
         with:
           working-dir: ${{ env.WORKING_DIR }}
           output-file: README.md
