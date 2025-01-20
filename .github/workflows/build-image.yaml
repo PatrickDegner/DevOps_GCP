@@ -19,7 +19,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      security-events: write
+      security-events: write # Needed for uploading SARIF results
 
     runs-on: ubuntu-latest
     defaults:
@@ -56,9 +56,8 @@ jobs:
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.18.0
         with:
-          image-ref: ${{ steps.build-push.outputs.tags }} # Use the output from build-push
           format: sarif
           output: trivy-results.sarif
           exit-code: '1' # Fail this step on vulnerabilities found
