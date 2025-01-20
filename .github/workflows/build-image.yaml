@@ -15,7 +15,7 @@ env:
   AR_URL: 'europe-west4-docker.pkg.dev/devops-project-448307/devops-repo'
 
 jobs:
-  push_to_ar:
+  build_and_push:
     permissions:
       contents: read
       id-token: write
