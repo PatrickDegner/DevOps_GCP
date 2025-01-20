@@ -1,0 +1,42 @@
+name: Push to Artifact Registry
+
+on:
+  push:
+    branches: 
+      - main
+    paths:
+      - 'app/**'
+
+env:
+  WORKING_DIR: app/
+  IMAGE_NAME: 'devops-app'
+  PROJECT_ID: 'devops-project-448307'
+  AR_REPO_LOCATION: 'europe-west4'
+  AR_URL: 'europe-west4-docker.pkg.dev/devops-project-448307/devops-repo'
+
+jobs:
+  push_to_ar:
+    permissions:
+      contents: read
+      id-token: write
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: google-github-actions/auth@v2
+        with:
+          create_credentials_file: 'true'
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
+          service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" ./
+          docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
