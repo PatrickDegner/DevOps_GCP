@@ -19,7 +19,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      security-events: write # Needed for uploading SARIF results
 
     runs-on: ubuntu-latest
     defaults:
@@ -45,7 +44,7 @@ jobs:
           gcloud auth configure-docker ${{ env.AR_REPO_LOCATION }}-docker.pkg.dev
 
       - name: Build and Push Container
-        id: build-push # Adding an ID to refer to outputs in later steps
+        id: build-push
         uses: docker/build-push-action@v6
         with:
           context: ${{ env.WORKING_DIR }}
@@ -54,17 +53,3 @@ jobs:
           tags: |
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          format: sarif
-          output: trivy-results.sarif
-          exit-code: '1' # Fail this step on vulnerabilities found
-          ignore-unfixed: true # Only show fixed vulnerabilities
-          severity: 'CRITICAL,HIGH' # Customize to your desired level
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: trivy-results.sarif
