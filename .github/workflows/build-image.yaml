@@ -2,7 +2,7 @@ name: Push to Artifact Registry
 
 on:
   push:
-    branches: 
+    branches:
       - main
     paths:
       - 'app/**'
@@ -35,6 +35,10 @@ jobs:
           create_credentials_file: 'true'
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
           service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
+
+      - name: Configure Docker for gcloud
+        run: |-
+          gcloud auth configure-docker ${{ env.AR_REPO_LOCATION }}-docker.pkg.dev
 
       - name: Build and Push Container
         run: |-
