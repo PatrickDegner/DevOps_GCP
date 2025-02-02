@@ -7,7 +7,6 @@ on:
     paths:
       - 'app/**'
       - '.github/workflows/**' # Include workflow files in trigger
-      - 'deployment.yaml' # Include deployment YAML
 
 env:
   WORKING_DIR: app/
@@ -59,6 +58,9 @@ jobs:
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest
 
+      - name: Save image tag
+        run: echo "IMAGE_TAG=${{ github.sha }}" > image-tag.txt
+
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
@@ -68,6 +70,6 @@ jobs:
       - name: Deploy to GKE
         run: |
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GKE_REGION }} --project ${{ env.PROJECT_ID }}
-          sed -i "s|${GITHUB_SHA}|${{ github.sha }}|g" manifests/deployment.yaml
+          sed -i "s|image: .*|image: ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|g" manifests/deployment.yaml
           kubectl apply -n ${{ env.NAMESPACE }} -f manifests/deployment.yaml
           kubectl apply -n ${{ env.NAMESPACE }} -f manifests/service.yaml
