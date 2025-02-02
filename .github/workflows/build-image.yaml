@@ -62,7 +62,7 @@ jobs:
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
-          install_components: 'Install gke-gcloud-auth-plugin'
+          install_components: 'gke-gcloud-auth-plugin'
           project_id: ${{ env.PROJECT_ID }}
 
       - name: Deploy to GKE
