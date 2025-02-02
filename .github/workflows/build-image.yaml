@@ -69,5 +69,5 @@ jobs:
       - name: Deploy to GKE
         run: |
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GKE_REGION }} --project ${{ env.PROJECT_ID }}
-          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.KUBERNETES_DIR }}/deployment.yaml
-          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.KUBERNETES_DIR }}/service.yaml
+          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.KUBERNETES_DIR }}deployment.yaml
+          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.KUBERNETES_DIR }}service.yaml
