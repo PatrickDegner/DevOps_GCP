@@ -4,6 +4,8 @@ locals {
     "iamcredentials.googleapis.com",       # IAM Service Account Credentials API
     "cloudresourcemanager.googleapis.com", # Cloud Resource Manager API
     "sts.googleapis.com",                  # Security Token Service API
+    "container.googleapis.com",            # Kubernetes Engine API
+    "compute.googleapis.com",              # Compute Engine API
   ])
 }
 
