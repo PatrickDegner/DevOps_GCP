@@ -10,7 +10,7 @@ on:
       - '.github/workflows/**'
 
 env:
-  WORKING_DIR: /
+  WORKING_DIR: app/
   KUBERNETES_DIR: kubernetes/
   IMAGE_NAME: 'devops-app'
   PROJECT_ID: 'devops-project-448307'
@@ -53,7 +53,7 @@ jobs:
         id: build-push
         uses: docker/build-push-action@v6
         with:
-          context: app
+          context: ${{ env.WORKING_DIR }}
           file: Dockerfile
           push: true
           tags: |
