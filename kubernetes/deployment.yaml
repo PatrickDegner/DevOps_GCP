@@ -1,19 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gcp
+  name: devops-app
+  labels:
+    app: devops-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gcp
+      app: devops-app
   template:
     metadata:
       labels:
-        app: gcp
+        app: devops-app
     spec:
       containers:
-      - name: devops-gke
+      - name: devops-app
         image: europe-west4-docker.pkg.dev/devops-project-448307/devops-repo/devops-app:latest
         ports:
         - containerPort: 5000

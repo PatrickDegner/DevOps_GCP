@@ -6,18 +6,19 @@ on:
       - main
     paths:
       - 'app/**'
-      - '.github/workflows/**' # Include workflow files in trigger
-      - 'deployment.yaml' # Include deployment YAML
+      - 'kubernetes/**'
+      - '.github/workflows/**'
 
 env:
   WORKING_DIR: app/
+  KUBERNETES_DIR: kubernetes/
   IMAGE_NAME: 'devops-app'
   PROJECT_ID: 'devops-project-448307'
   AR_REPO_LOCATION: 'europe-west4'
   AR_URL: 'europe-west4-docker.pkg.dev/devops-project-448307/devops-repo'
-  GKE_CLUSTER: 'devops-cluster' # Name of your GKE cluster
-  GKE_REGION: 'europe-west4'    # Region of your GKE cluster
-  NAMESPACE: 'devopsproject'   # Kubernetes namespace
+  GKE_CLUSTER: 'devops-cluster'
+  GKE_REGION: 'europe-west4'
+  NAMESPACE: 'devopsproject'
 
 jobs:
   build_and_deploy:
@@ -68,4 +69,5 @@ jobs:
       - name: Deploy to GKE
         run: |
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GKE_REGION }} --project ${{ env.PROJECT_ID }}
-          kubectl apply -n ${{ env.NAMESPACE }} -f deployment.yaml
+          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.KUBERNETES_DIR }}/deployment.yaml
+          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.KUBERNETES_DIR }}/service.yaml
