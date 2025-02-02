@@ -22,6 +22,8 @@ provider "google" {
   region  = var.region
 }
 
+data "google_client_config" "devops_cluster" {}
+
 provider "kubernetes" {
   host                   = "https://${google_container_cluster.devops_cluster.endpoint}"
   token                  = data.google_client_config.devops_cluster.access_token
