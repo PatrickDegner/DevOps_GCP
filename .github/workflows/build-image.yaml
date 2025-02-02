@@ -60,13 +60,10 @@ jobs:
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Set up gcloud
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v2
         with:
-          service_account_key: ${{ steps.auth.outputs.credentials_file }} # Use the credentials file
+          install_components: 'Install gke-gcloud-auth-plugin'
           project_id: ${{ env.PROJECT_ID }}
-
-      - name: Install gke-gcloud-auth-plugin
-        run: gcloud components install gke-gcloud-auth-plugin
 
       - name: Deploy to GKE
         run: |
