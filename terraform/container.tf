@@ -5,45 +5,45 @@ resource "google_artifact_registry_repository" "devops-repo" {
   format        = "DOCKER"
 }
 
-resource "google_container_cluster" "devops_cluster" {
-  name                     = "devops-cluster"
-  location                 = var.region
-  network                  = google_compute_network.devops_vpc.id
-  subnetwork               = google_compute_subnetwork.devops_subnet.id
-  remove_default_node_pool = true
-  initial_node_count       = 1
-  deletion_protection      = false
-  node_locations = [
-    "europe-west4-a" # Zonal cluster
-  ]
+# resource "google_container_cluster" "devops_cluster" {
+#   name                     = "devops-cluster"
+#   location                 = var.region
+#   network                  = google_compute_network.devops_vpc.id
+#   subnetwork               = google_compute_subnetwork.devops_subnet.id
+#   remove_default_node_pool = true
+#   initial_node_count       = 1
+#   deletion_protection      = false
+#   node_locations = [
+#     "europe-west4-a" # Zonal cluster
+#   ]
 
-  ip_allocation_policy {
-    services_secondary_range_name = google_compute_subnetwork.devops_subnet.secondary_ip_range[0].range_name
-    cluster_secondary_range_name  = google_compute_subnetwork.devops_subnet.secondary_ip_range[1].range_name
-  }
-  depends_on = [google_compute_subnetwork.devops_subnet]
-}
+#   ip_allocation_policy {
+#     services_secondary_range_name = google_compute_subnetwork.devops_subnet.secondary_ip_range[0].range_name
+#     cluster_secondary_range_name  = google_compute_subnetwork.devops_subnet.secondary_ip_range[1].range_name
+#   }
+#   depends_on = [google_compute_subnetwork.devops_subnet]
+# }
 
-resource "google_container_node_pool" "devops_node_pool" {
-  name       = "devops-pool"
-  cluster    = google_container_cluster.devops_cluster.name
-  location   = var.region
-  node_count = 1
+# resource "google_container_node_pool" "devops_node_pool" {
+#   name       = "devops-pool"
+#   cluster    = google_container_cluster.devops_cluster.name
+#   location   = var.region
+#   node_count = 1
 
-  node_config {
-    machine_type = "e2-micro"
-    metadata = {
-      disable-legacy-endpoints = "true"
-    }
-  }
+#   node_config {
+#     machine_type = "e2-micro"
+#     metadata = {
+#       disable-legacy-endpoints = "true"
+#     }
+#   }
 
-  depends_on = [google_container_cluster.devops_cluster]
-}
+#   depends_on = [google_container_cluster.devops_cluster]
+# }
 
-resource "kubernetes_namespace" "devopsproject" {
-  metadata {
-    name = "devopsproject"
-  }
+# resource "kubernetes_namespace" "devopsproject" {
+#   metadata {
+#     name = "devopsproject"
+#   }
 
-  depends_on = [google_container_node_pool.devops_node_pool]
-}
+#   depends_on = [google_container_node_pool.devops_node_pool]
+# }
