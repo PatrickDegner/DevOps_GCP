@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "devops-project-448307-terraform" # need to update with the bucket name
+    bucket = "devops-project-448307-terraform"
     prefix = "state"
   }
 }
