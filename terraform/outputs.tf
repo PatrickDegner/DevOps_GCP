@@ -16,13 +16,3 @@ output "service_account_github_actions_email" {
 output "cluster_endpoint" {
   value = google_container_cluster.devops_cluster.endpoint
 }
-
-output "cluster_token" {
-  value     = google_container_cluster.devops_cluster.master_auth[0].token
-  sensitive = true
-}
-
-output "cluster_ca_certificate" {
-  value     = base64decode(google_container_cluster.devops_cluster.master_auth[0].cluster_ca_certificate)
-  sensitive = true
-}
