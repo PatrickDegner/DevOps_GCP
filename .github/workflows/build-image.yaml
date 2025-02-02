@@ -53,8 +53,8 @@ jobs:
         id: build-push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.WORKING_DIR }}app
-          file: ${{ env.WORKING_DIR }}/Dockerfile
+          context: app
+          file: Dockerfile
           push: true
           tags: |
             ${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
