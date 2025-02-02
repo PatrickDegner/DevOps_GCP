@@ -18,7 +18,6 @@ resource "google_container_cluster" "devops_cluster" {
   ]
 
   ip_allocation_policy {
-    stack_type                    = "IPV4_IPV6"
     services_secondary_range_name = google_compute_subnetwork.devops_subnet.secondary_ip_range[0].range_name
     cluster_secondary_range_name  = google_compute_subnetwork.devops_subnet.secondary_ip_range[1].range_name
   }
@@ -45,5 +44,5 @@ resource "kubernetes_namespace" "devopsproject" {
     name = "devopsproject"
   }
 
-  depends_on = [google_container_cluster.devops_cluster]
+  depends_on = [google_container_node_pool.devops_node_pool]
 }
