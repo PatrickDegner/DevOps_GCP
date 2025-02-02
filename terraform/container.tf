@@ -15,7 +15,7 @@ resource "google_container_cluster" "devops_cluster" {
 
   ip_allocation_policy {
     cluster_secondary_range_name  = "pod-ranges"
-    services_secondary_range_name = google_compute_subnetwork.devops_subnet.secondary_ip_range[0].range_name
+    services_secondary_range_name = "services-range"
   }
 }
 
