@@ -10,7 +10,7 @@ on:
       - '.github/workflows/**'
 
 env:
-  WORKING_DIR: kubernetes/
+  WORKING_DIR: /
   KUBERNETES_DIR: kubernetes/
   IMAGE_NAME: 'devops-app'
   PROJECT_ID: 'devops-project-448307'
@@ -53,7 +53,7 @@ jobs:
         id: build-push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.WORKING_DIR }}
+          context: ${{ env.WORKING_DIR }}app
           file: ${{ env.WORKING_DIR }}/Dockerfile
           push: true
           tags: |
@@ -69,5 +69,5 @@ jobs:
       - name: Deploy to GKE
         run: |
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GKE_REGION }} --project ${{ env.PROJECT_ID }}
-          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.WORKING_DIR }}deployment.yaml
-          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.WORKING_DIR }}service.yaml
+          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.WORKING_DIR }}kubernetes/deployment.yaml
+          kubectl apply -n ${{ env.NAMESPACE }} -f ${{ env.WORKING_DIR }}kubernetes/service.yaml
