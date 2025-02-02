@@ -12,10 +12,12 @@ resource "google_container_cluster" "devops_cluster" {
   subnetwork               = google_compute_subnetwork.devops_subnet.id
   remove_default_node_pool = true
   initial_node_count       = 1
+  deletion_protection      = false
 
   ip_allocation_policy {
-    cluster_secondary_range_name  = "pod-ranges"
-    services_secondary_range_name = "services-range"
+    stack_type                    = "IPV4_IPV6"
+    services_secondary_range_name = google_compute_subnetwork.devops_subnet.secondary_ip_range[0].range_name
+    cluster_secondary_range_name  = google_compute_subnetwork.devops_subnet.secondary_ip_range[1].range_name
   }
 }
 

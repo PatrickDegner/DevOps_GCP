@@ -22,22 +22,13 @@ provider "google" {
   region  = var.region
 }
 
-# provider "kubernetes" {
-#   host                   = google_container_cluster.devops_cluster.endpoint
-#   cluster_ca_certificate = base64decode(google_container_cluster.devops_cluster.master_auth[0].cluster_ca_certificate)
+provider "kubernetes" {
+  host                   = "https://${google_container_cluster.devops_cluster.endpoint}"
+  token                  = data.google_client_config.devops_cluster.access_token
+  cluster_ca_certificate = base64decode(google_container_cluster.devops_cluster.master_auth[0].cluster_ca_certificate)
 
-#   exec {
-#     api_version = "client.authentication.k8s.io/v1beta1"
-#     command     = "gcloud"
-#     args = [
-#       "container",
-#       "clusters",
-#       "get-credentials",
-#       google_container_cluster.devops_cluster.name,
-#       "--region",
-#       google_container_cluster.devops_cluster.location,
-#       "--project",
-#       var.project,
-#     ]
-#   }
-# }
+  ignore_annotations = [
+    "^autopilot\\.gke\\.io\\/.*",
+    "^cloud\\.google\\.com\\/.*"
+  ]
+}
