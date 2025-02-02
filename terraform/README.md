@@ -5,14 +5,14 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 6.1 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 5.1 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 6.18.1 |
+| <a name="provider_google"></a> [google](#provider\_google) | 5.45.1 |
 | <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | 6.18.1 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.35.1 |
 
@@ -49,7 +49,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cluster_endpoint"></a> [cluster\_endpoint](#output\_cluster\_endpoint) | n/a |
 | <a name="output_pool_name"></a> [pool\_name](#output\_pool\_name) | Pool name |
 | <a name="output_provider_name"></a> [provider\_name](#output\_provider\_name) | Provider name |
 | <a name="output_service_account_github_actions_email"></a> [service\_account\_github\_actions\_email](#output\_service\_account\_github\_actions\_email) | Service Account used by GitHub Actions |
