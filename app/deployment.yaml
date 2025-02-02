@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gcp
+  template:
+    metadata:
+      labels:
+        app: gcp
+    spec:
+      containers:
+      - name: devops-gke
+        image: europe-west4-docker.pkg.dev/devops-project-448307/devops-repo/devops-app:latest
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "10Mi"
+            cpu: "250m"
+        env:
+          - name: PORT
+            value: "5000"
