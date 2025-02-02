@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: devops-app
-        image: europe-west4-docker.pkg.dev/devops-project-448307/devops-repo/devops-app:PLACEHOLDER_TAG
+        image: placeholder-image
         ports:
         - containerPort: 8000
         env:
