@@ -13,6 +13,9 @@ resource "google_container_cluster" "devops_cluster" {
   remove_default_node_pool = true
   initial_node_count       = 1
   deletion_protection      = false
+  node_locations = [
+    "europe-west4-a" # Zonal cluster
+  ]
 
   ip_allocation_policy {
     stack_type                    = "IPV4_IPV6"
@@ -28,12 +31,10 @@ resource "google_container_node_pool" "devops_node_pool" {
   node_count = 1
 
   node_config {
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
-    ]
+    machine_type = "e2-micro"
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
   }
 
   depends_on = [google_container_cluster.devops_cluster]
