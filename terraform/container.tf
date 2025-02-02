@@ -44,11 +44,3 @@ resource "kubernetes_namespace" "devopsproject" {
 
   depends_on = [google_container_cluster.devops_cluster]
 }
-
-resource "kubernetes_namespace" "devopsproject" {
-  metadata {
-    name = "devopsproject"
-  }
-
-  depends_on = [google_container_cluster.devops_cluster]
-}
