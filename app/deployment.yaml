@@ -17,13 +17,6 @@ spec:
         image: europe-west4-docker.pkg.dev/devops-project-448307/devops-repo/devops-app:latest
         ports:
         - containerPort: 5000
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-          requests:
-            memory: "10Mi"
-            cpu: "250m"
         env:
           - name: PORT
             value: "5000"
