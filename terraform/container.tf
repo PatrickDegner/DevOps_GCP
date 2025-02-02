@@ -16,7 +16,7 @@ resource "google_container_cluster" "devops_cluster" {
     name         = "default-pool"
     node_count   = 1
     node_config {
-      machine_type = "e2-medium"
+      machine_type = "e2-standard-2"
     }
   }
 }
